@@ -1570,7 +1570,7 @@ get_packages() {
 
             has nix-store && {
                 nix-user-pkgs() {
-                    nix-store -qR ~/.nix-profile
+                    nix-store -qR "${NIX_PROFILE:-${HOME}/.nix-profile}"
                     nix-store -qR /etc/profiles/per-user/"$USER"
                 }
                 manager=nix-system  && tot nix-store -qR /run/current-system/sw
@@ -1615,7 +1615,7 @@ get_packages() {
 
             has nix-store && {
                 nix-user-pkgs() {
-                    nix-store -qR ~/.nix-profile
+                    nix-store -qR "${NIX_PROFILE:-${HOME}/.nix-profile}"
                     nix-store -qR /etc/profiles/per-user/"$USER"
                 }
                 manager=nix-system && tot nix-store -qR /run/current-system/sw
@@ -4117,7 +4117,7 @@ END
 get_w3m_img_path() {
     # Find w3m-img path.
     shopt -s nullglob
-    w3m_paths=({/usr/{local/,},~/.nix-profile/}{lib,libexec,lib64,libexec64}/w3m/w3mi*)
+    w3m_paths=({/usr/{local/,},${NIX_PROFILE:-~/.nix-profile}/}{lib,libexec,lib64,libexec64}/w3m/w3mi*)
     shopt -u nullglob
 
     [[ -x "${w3m_paths[0]}" ]] && \
